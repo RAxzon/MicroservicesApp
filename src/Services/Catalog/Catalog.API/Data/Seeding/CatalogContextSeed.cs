@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Catalog.API.Entities;
 using MongoDB.Driver;
 
@@ -13,7 +14,14 @@ namespace Catalog.API.Data.Seeding
 
             if (!doesDbExist)
             {
-                productCollection.InsertManyAsync(GetPreconfiguredProducts());
+                try
+                {
+                    productCollection.InsertManyAsync(GetPreconfiguredProducts());
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error", ex);
+                }
             }
         }
 
@@ -23,7 +31,7 @@ namespace Catalog.API.Data.Seeding
             {
                 new Product()
                 {
-                    Id = "602d2149e773f2a399047f5",
+                    Id = "602d2149e773f2a3990b47f5",
                     Name = "Samsung Galaxy S20",
                     Summary = "Summary of Samsung Galaxy S20",
                     Description = "Description of Samsung Galaxy S20",
@@ -33,7 +41,7 @@ namespace Catalog.API.Data.Seeding
                 },
                 new Product()
                 {
-                    Id = "602d2149e773f2a399047f6",
+                    Id = "602d2149e773f2a3990b47f6",
                     Name = "Samsung Galaxy S21",
                     Summary = "Summary of Samsung Galaxy S21",
                     Description = "Description of Samsung Galaxy S21",
@@ -43,7 +51,7 @@ namespace Catalog.API.Data.Seeding
                 },
                 new Product()
                 {
-                    Id = "602d2149e773f2a399047f7",
+                    Id = "602d2149e773f2a3990b47f7",
                     Name = "PlayStation 4",
                     Summary = "Summary of PlayStation 4",
                     Description = "Description of PlayStation 4",
@@ -53,14 +61,14 @@ namespace Catalog.API.Data.Seeding
                 },
                 new Product()
                 {
-                    Id = "602d2149e773f2a399047f8",
+                    Id = "602d2149e773f2a3990b47f8",
                     Name = "PlayStation 5",
                     Summary = "Summary of PlayStation 5",
                     Description = "Description of PlayStation 5",
                     ImageFile = "product4.png",
                     Price = 5500.00M,
                     Category = "Console"
-                },
+                }
             };
         }
     }
