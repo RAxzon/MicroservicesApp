@@ -29,7 +29,7 @@ namespace Discount.Grpc.Repositories
 
         public async Task<Coupon> GetDiscount(string productName)
         {
-            var coupon = await _connection.QueryFirstOrDefaultAsync<Coupon>("SELECT * FROM Coupon WHERE ProductName = @ProductName", productName);
+            var coupon = await _connection.QueryFirstOrDefaultAsync<Coupon>("SELECT * FROM Coupon WHERE ProductName = @ProductName", new {ProductName = productName});
             return coupon;
         }
 
