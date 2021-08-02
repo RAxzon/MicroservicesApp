@@ -19,7 +19,8 @@ namespace Ordering.Application.Features.Orders.Commands.DeleteOrder.Handlers
         private readonly IEmailService _emailService;
         private readonly ILogger<DeleteOrderCommandHandler> _logger;
 
-        public DeleteOrderCommandHandler(IOrderRepository orderRepository, IEmailService emailService, ILogger<DeleteOrderCommandHandler> logger)
+        public DeleteOrderCommandHandler(IOrderRepository orderRepository, IEmailService emailService,
+            ILogger<DeleteOrderCommandHandler> logger)
         {
             _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
             _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
@@ -66,4 +67,5 @@ namespace Ordering.Application.Features.Orders.Commands.DeleteOrder.Handlers
                 throw;
             }
         }
+    }
 }
