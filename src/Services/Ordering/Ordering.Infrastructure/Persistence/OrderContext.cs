@@ -28,6 +28,8 @@ namespace Ordering.Infrastructure.Persistence
                         entry.Entity.DateCreated = DateTime.Now;
                         entry.Entity.CreatedBy = "Richie";
                         break;
+                    case EntityState.Deleted:
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

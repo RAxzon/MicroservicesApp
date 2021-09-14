@@ -30,8 +30,7 @@ namespace Ordering.Infrastructure.Persistence
         {
             return new List<Order>
             {
-                new() {UserName = "Richie", FirstName = "Richie", LastName = "Axelsson", EmailAddress = "Richiehstad@gmail.com", AddressLine = "Egon8", Country = "Sweden", TotalPrice = 350 },
-                new() {UserName = "Klingos", FirstName = "Sara", LastName = "Axelsson", EmailAddress = "ffsdjfsdkfnsdnfdsfsn@gmail.com", AddressLine = "Egon8", Country = "Sweden", TotalPrice = 340 },
+                new Order() {UserName = "swn", FirstName = "Mehmet", LastName = "Ozkaya", EmailAddress = "ezozkme@gmail.com", AddressLine = "Bahcelievler", Country = "Turkey", TotalPrice = 350 }
             };
         }
     }

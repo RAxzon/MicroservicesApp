@@ -31,13 +31,23 @@ namespace Ordering.Application.Features.Orders.Commands.CheckoutOrder.Handlers
         public async Task<int> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
         {
             var order = _mapper.Map<Order>(request);
-            var newOrder = await _orderRepository.AddAsync(order);
 
-            _logger.LogInformation($"Order {newOrder.Id} was successfully created.");
+            try
+            {
 
-            await SendEmail(newOrder);
+                var newOrder = await _orderRepository.AddAsync(order);
 
-            return newOrder.Id;
+
+                _logger.LogInformation($"Order {newOrder.Id} was successfully created.");
+
+                //await SendEmail(newOrder);
+
+                return newOrder.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         private async Task SendEmail(Order order)

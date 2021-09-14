@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Ordering.Application.Contracts.Infrastructure;
@@ -17,14 +18,16 @@ namespace Ordering.Application.Features.Orders.Commands.DeleteOrder.Handlers
 
         private readonly IOrderRepository _orderRepository;
         private readonly IEmailService _emailService;
+        private readonly IMapper _mapper;
         private readonly ILogger<DeleteOrderCommandHandler> _logger;
 
         public DeleteOrderCommandHandler(IOrderRepository orderRepository, IEmailService emailService,
-            ILogger<DeleteOrderCommandHandler> logger)
+            ILogger<DeleteOrderCommandHandler> logger, IMapper mapper)
         {
             _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
             _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper)); ;
         }
 
         public async Task<Unit> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
@@ -33,15 +36,24 @@ namespace Ordering.Application.Features.Orders.Commands.DeleteOrder.Handlers
 
             if (orderToDelete == null)
             {
-                _logger.LogError($"Order with id: {request.Id} was not found.");
-                throw new NotFoundException(nameof(Order), request.Id);
+                //_logger.LogError($"Order with id: {request.Id} was not found.");
+                throw new NotFoundException(nameof(Order), request);
             }
 
-            await _orderRepository.DeleteAsync(orderToDelete);
+            try
+            {
+                _mapper.Map(request, orderToDelete, typeof(DeleteOrderCommand), typeof(Order));
+
+                await _orderRepository.DeleteAsync(orderToDelete);
+            }
+            catch(Exception ex) 
+            {
+                throw new Exception($"Error deleting order with id: {orderToDelete.Id}", ex);
+            }
 
             _logger.LogInformation($"Order with id: {orderToDelete.Id} was deleted.");
 
-            await SendEmail(orderToDelete);
+            //await SendEmail(orderToDelete);
 
             return Unit.Value;
         }

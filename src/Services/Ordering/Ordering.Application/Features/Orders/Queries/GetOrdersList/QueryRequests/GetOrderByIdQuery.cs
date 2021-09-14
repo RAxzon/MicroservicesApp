@@ -1,14 +1,12 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
 
 namespace Ordering.Application.Features.Orders.Queries.GetOrdersList.QueryRequests
 {
-    public class GetOrderQuery : IRequest<OrdersVm>
+    public class GetOrderByIdQuery : IRequest<OrdersVm>
     {
-
         public int Id { get; set; }
 
-        public GetOrderQuery(int id)
+        public GetOrderByIdQuery(int id)
         {
             Id = id;
         }

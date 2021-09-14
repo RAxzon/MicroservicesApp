@@ -61,7 +61,7 @@ namespace Ordering.Infrastructure.Repositories
 
         public async Task DeleteAsync(T entity)
         {
-            _context.Set<T>().Remove(entity);
+            _context.Set<T>().Remove(entity).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
     }

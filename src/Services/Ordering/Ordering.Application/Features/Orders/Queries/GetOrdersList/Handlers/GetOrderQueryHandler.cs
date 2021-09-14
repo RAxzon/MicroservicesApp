@@ -8,7 +8,7 @@ using Ordering.Application.Features.Orders.Queries.GetOrdersList.QueryRequests;
 
 namespace Ordering.Application.Features.Orders.Queries.GetOrdersList.Handlers
 {
-    public class GetOrderQueryHandler : IRequestHandler<GetOrderQuery, OrdersVm>
+    public class GetOrderQueryHandler : IRequestHandler<GetOrderByIdQuery, OrdersVm>
     {
 
         private readonly IOrderRepository _orderRepository;
@@ -20,7 +20,7 @@ namespace Ordering.Application.Features.Orders.Queries.GetOrdersList.Handlers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<OrdersVm> Handle(GetOrderQuery request, CancellationToken cancellationToken)
+        public async Task<OrdersVm> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
         {
             var order = await _orderRepository.GetByIdAsync(request.Id);
             return _mapper.Map<OrdersVm>(order);

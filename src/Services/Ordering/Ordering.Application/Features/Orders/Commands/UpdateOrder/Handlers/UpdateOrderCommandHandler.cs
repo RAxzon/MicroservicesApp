@@ -35,8 +35,7 @@ namespace Ordering.Application.Features.Orders.Commands.UpdateOrder.Handlers
 
             if (orderToUpdate == null)
             {
-                _logger.LogError($"Order with id: {request.Id} was not found.");
-                throw new NotFoundException(nameof(Order), request.Id);
+                throw new NotFoundException($"Order not found with id:", request.Id);
             }
 
             _mapper.Map(request, orderToUpdate, typeof(UpdateOrderCommand), typeof(Order));
@@ -45,7 +44,7 @@ namespace Ordering.Application.Features.Orders.Commands.UpdateOrder.Handlers
 
             _logger.LogInformation($"Order with id: {orderToUpdate.Id} was updated");
 
-            await SendEmail(orderToUpdate);
+            //await SendEmail(orderToUpdate);
 
             return Unit.Value;
         }
