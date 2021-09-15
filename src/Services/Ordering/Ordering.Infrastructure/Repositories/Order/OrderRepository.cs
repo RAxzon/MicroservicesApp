@@ -14,9 +14,16 @@ namespace Ordering.Infrastructure.Repositories.Order
         {
         }
 
+        public async Task<IEnumerable<Domain.Entities.Order>> GetHighOrders(int price)
+        {
+            return await _context.Orders.Where(o => o.TotalPrice > price).ToListAsync();
+        }
+
         public async Task<IEnumerable<Domain.Entities.Order>> GetOrderByUserName(string userName)
         {
             return await _context.Orders.Where(o => o.UserName == userName).ToListAsync();
         }
+
+        
     }
 }

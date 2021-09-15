@@ -86,7 +86,7 @@ namespace Catalog.API.Controllers
                 if (!products.Any())
                 {
                     _logger.LogInformation($"Products with {category} were not found");
-                    return NotFound($"The category: {category}, was not found.");
+                    return NotFound($"The category: {category}, was not found, try again.");
                 }
 
                 return Ok(products);

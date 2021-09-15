@@ -52,7 +52,7 @@ namespace Ordering.API.Controllers
             }
         }
 
-        [HttpGet("{id:int}", Name = "GetOrderById")]
+        [HttpGet("{id}/id", Name = "GetOrderById")]
         [ProducesResponseType(typeof(IEnumerable<OrdersVm>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<IEnumerable<OrdersVm>>> GetOrderById(int id)
@@ -76,7 +76,7 @@ namespace Ordering.API.Controllers
             }
         }
 
-        [HttpGet("{userName}", Name = "GetOrderByUserName")]
+        [HttpGet("{userName}/userName", Name = "GetOrderByUserName")]
         [ProducesResponseType(typeof(IEnumerable<OrdersVm>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<IEnumerable<OrdersVm>>> GetOrdersByUserName(string userName)
@@ -84,6 +84,30 @@ namespace Ordering.API.Controllers
             try
             {
                 var query = new GetOrdersListByUsernameQuery(userName);
+                var orders = await _mediator.Send(query);
+
+                if (!orders.Any())
+                {
+                    return NotFound();
+                }
+
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error getting orders", ex);
+                throw new Exception($"Error getting orders", ex);
+            }
+        }
+
+        [HttpGet("{price}/price", Name = "GetHighOrders")]
+        [ProducesResponseType(typeof(IEnumerable<OrdersVm>), (int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        public async Task<ActionResult<IEnumerable<OrdersVm>>> GetHighOrders(int price)
+        {
+            try
+            {
+                var query = new GetHighOrdersQuery(price);
                 var orders = await _mediator.Send(query);
 
                 if (!orders.Any())
