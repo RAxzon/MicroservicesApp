@@ -6,7 +6,6 @@ using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Any;
 using Ordering.Application.Features.Orders.Commands.CheckoutOrder.CommandRequests;
 using Ordering.Application.Features.Orders.Commands.DeleteOrder.CommandRequest;
 using Ordering.Application.Features.Orders.Commands.UpdateOrder.CommandRequests;
