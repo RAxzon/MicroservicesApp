@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Basket.API.GrpcServices;
 using Basket.API.Repositories;
 using Basket.API.Repositories.Interfaces;
@@ -36,7 +37,7 @@ namespace Basket.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket.API", Version = "v1" });
             });
 
-            // Connect to RMQMT
+            // Connect to Rabbit/Mass
             services.AddMassTransit(config =>
             {
                 config.UsingRabbitMq((ctx, cfg) =>
@@ -49,6 +50,9 @@ namespace Basket.API
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(o => o.Address = new Uri(Configuration["GrpcSettings:DiscountUrl"]));
             services.AddScoped<DiscountGrpcService>();
+
+            // AutoMapper
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
