@@ -6,7 +6,7 @@ namespace EventBus.Messages.Events
     {
         public IntegrationsBaseEvent()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             CreateDate = DateTime.UtcNow;
         }
 

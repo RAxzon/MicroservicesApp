@@ -37,7 +37,6 @@ namespace Ordering.Application.Features.Orders.Commands.CheckoutOrder.Handlers
 
                 var newOrder = await _orderRepository.AddAsync(order);
 
-
                 _logger.LogInformation($"Order {newOrder.Id} was successfully created.");
 
                 //await SendEmail(newOrder);

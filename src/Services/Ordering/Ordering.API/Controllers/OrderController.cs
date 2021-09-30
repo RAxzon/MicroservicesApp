@@ -123,8 +123,9 @@ namespace Ordering.API.Controllers
             }
         }
 
+        // For Testing
         [HttpPost(Name = "CheckoutOrder")]
-        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> CheckoutOrder([FromBody] CheckoutOrderCommand command)
         {
             var result = await _mediator.Send(command);

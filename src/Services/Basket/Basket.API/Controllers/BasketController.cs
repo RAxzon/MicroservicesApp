@@ -119,6 +119,8 @@ namespace Basket.API.Controllers
                     }
 
                     var eventMessage = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
+                    eventMessage.EmailAddress = "Richiehstad@gmail.com";
+                    eventMessage.TotalPrice = basket.TotalPrice;
 
                     await _publishEndpoint.Publish(eventMessage);
 
